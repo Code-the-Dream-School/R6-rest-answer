@@ -15,8 +15,13 @@ RSpec.describe 'user/registrations', type: :request do
         }}}
       }
       response(201, 'successful') do
-        let(:user) { FactoryBot.attributes_for(:user) }
-
+        let(:user1) { FactoryBot.attributes_for(:user) }
+        let(:user) do
+          { user: {
+              email: user1[:email],
+              password: user1[:password]
+          }}
+        end
         after do |example|
           example.metadata[:response][:examples] = { 'application/json' => JSON.parse(response.body, symbolize_names: true) }
         end
